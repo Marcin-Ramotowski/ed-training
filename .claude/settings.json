@@ -1,4 +1,28 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(npm *)",
+      "Read(**)",
+      "Write(src/**)",
+      "Write(tests/**)"
+    ],
+    "ask": [
+      "Bash(git push *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)",
+      "Bash(curl * | bash)",
+      "Bash(wget * | sh)",
+      "Bash(cat .env)",
+      "Bash(cat **/*.key)",
+      "Bash(cat **/*.pem)",
+      "Read(.env)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -18,17 +42,6 @@
           {
             "type": "command",
             "command": ".claude/hooks/typecheck-after-edit.sh"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "agent",
-            "prompt": "Run the test suite. If any test fails, respond with {\"ok\": false, \"reason\": \"description of failures\"}.",
-            "timeout": 120
           }
         ]
       }

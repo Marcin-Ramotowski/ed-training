@@ -2,6 +2,17 @@
 
 ARG NODE_VERSION=22-alpine
 
+FROM node:${NODE_VERSION} AS dev
+WORKDIR /app
+ENV NEXT_TELEMETRY_DISABLED=1 \
+    HOSTNAME=0.0.0.0 \
+    PORT=3000
+COPY package.json package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
+
 FROM node:${NODE_VERSION} AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1

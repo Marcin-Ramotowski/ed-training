@@ -1,0 +1,23 @@
+services:
+  app:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 512M
+
+  db:
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M

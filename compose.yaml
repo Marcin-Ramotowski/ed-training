@@ -6,6 +6,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - public
+      - internal
 
   db:
     image: postgres:17-alpine
@@ -21,6 +24,13 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    networks:
+      - internal
 
 volumes:
   db-data:
+
+networks:
+  public:
+  internal:
+    internal: true
